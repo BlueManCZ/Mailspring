@@ -15,6 +15,7 @@ import {
   ChangeContactGroupMembershipTask,
 } from 'mailspring-exports';
 import { showGPeopleReadonlyNotice } from './GoogleSupport';
+import { exportContactsToFile } from './VCFImportExport';
 
 interface ContactDetailToolbarProps {
   editing: string | 'new' | false;
@@ -92,6 +93,7 @@ class ContactDetailToolbarWithData extends React.Component<ContactDetailToolbarP
     }
     if (actionSet.length > 0) {
       commands['core:delete-item'] = this._onDelete;
+      commands['contacts:export-vcf-selected'] = () => exportContactsToFile(actionSet);
     }
     if (editable) {
       commands['core:edit-item'] = this._onEdit;
@@ -120,6 +122,14 @@ class ContactDetailToolbarWithData extends React.Component<ContactDetailToolbarP
           </button>
           <button
             tabIndex={-1}
+            title={localized('Export vCard')}
+            className={`btn btn-toolbar ${actionSet.length === 0 && 'btn-disabled'}`}
+            onClick={actionSet.length > 0 ? () => exportContactsToFile(actionSet) : undefined}
+          >
+            <RetinaImg name="toolbar-export-contact.png" mode={RetinaImg.Mode.ContentIsMask} />
+          </button>
+          <button
+            tabIndex={-1}
             title={localized('Edit')}
             className={`btn btn-toolbar ${!editable && 'btn-disabled'}`}
             onClick={editable ? this._onEdit : undefined}
@@ -132,9 +142,7 @@ class ContactDetailToolbarWithData extends React.Component<ContactDetailToolbarP
   }
 }
 
-export const ContactDetailToolbar: React.FunctionComponent<
-  ContactDetailToolbarProps
-> = ListensToFluxStore(
+export const ContactDetailToolbar: React.FunctionComponent<ContactDetailToolbarProps> = ListensToFluxStore(
   ({ listSource, editing, perspective }) => (
     <FocusContainer collection="contact">
       <ContactDetailToolbarWithData
