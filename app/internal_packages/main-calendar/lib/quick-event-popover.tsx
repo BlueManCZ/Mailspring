@@ -1,5 +1,5 @@
 import React from 'react';
-import { Actions, Calendar, DatabaseStore, localized } from 'mailspring-exports';
+import { Actions, Calendar, DatabaseStore, DateUtils, localized } from 'mailspring-exports';
 import { Moment } from 'moment';
 import {
   getEditableCalendars,
@@ -26,7 +26,7 @@ export class QuickEventPopover extends React.Component<
     };
   }
 
-  onInputKeyDown = (event) => {
+  onInputKeyDown = event => {
     const {
       key,
       target: { value },
@@ -39,7 +39,7 @@ export class QuickEventPopover extends React.Component<
     }
   };
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     this.setState(DateUtils.parseDateString(event.target.value));
   };
 
