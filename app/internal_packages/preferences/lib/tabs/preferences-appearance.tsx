@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RetinaImg, Flexbox } from 'mailspring-component-kit';
+import { RetinaImg, Flexbox, RovingTabIndexToolbar } from 'mailspring-component-kit';
 import { localized } from 'mailspring-exports';
 import { ConfigLike } from '../types';
 import SystemTrayIconStore from '../../../system-tray/lib/system-tray-icon-store';
@@ -41,12 +41,17 @@ class AppearanceScaleSlider extends React.Component<
             <RetinaImg name="appearance-scale-big.png" mode={RetinaImg.Mode.ContentDark} />
           </div>
         </div>
+        <label htmlFor="interface-zoom-slider" className="sr-only">
+          {localized('Interface Scale')}
+        </label>
         <input
+          id="interface-zoom-slider"
           type="range"
           min={0.8}
           max={1.4}
           step={0.05}
           value={this.state.value}
+          aria-label={localized('Interface Scale')}
           onChange={(e) => this.props.config.set(this.kp, e.target.value)}
         />
       </div>
@@ -165,9 +170,13 @@ class AppearanceModeSwitch extends React.Component<
 
     return (
       <div id={this.props.id} className="appearance-mode-switch">
-        <Flexbox direction="row" style={{ alignItems: 'center' }} className="item">
+        <RovingTabIndexToolbar
+          label={localized('Layout')}
+          className="item"
+          style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        >
           {this._renderModeOptions()}
-        </Flexbox>
+        </RovingTabIndexToolbar>
         <div className={applyChangesClass} onClick={this._onApplyChanges}>
           {localized('Apply Layout')}
         </div>
@@ -301,8 +310,23 @@ const AppearanceModeOption = function AppearanceModeOption(props) {
     splitVertical: localized('Two Panel Vertical'),
   }[props.mode];
 
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      props.onClick();
+    }
+  };
+
   return (
-    <div className={classname} onClick={props.onClick}>
+    <div
+      className={classname}
+      role="button"
+      tabIndex={-1}
+      aria-pressed={props.active}
+      aria-label={label}
+      onClick={props.onClick}
+      onKeyDown={onKeyDown}
+    >
       <RetinaImg name={`appearance-mode-${props.mode}.png`} mode={RetinaImg.Mode.ContentIsMask} />
       <div>{label}</div>
     </div>
