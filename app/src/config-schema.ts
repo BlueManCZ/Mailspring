@@ -180,6 +180,11 @@ export default {
             default: true,
             title: localized('Check messages for spelling'),
           },
+          grammarCheck: {
+            type: 'boolean',
+            default: false,
+            title: localized('Check messages for grammar'),
+          },
           spellcheckDefaultLanguage: {
             type: 'string',
             default: '',
