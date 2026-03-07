@@ -46,7 +46,7 @@
     "moment-round": "^1.0.1",
     "moment-timezone": "^0.6.0",
     "mousetrap": "^1.6.5",
-    "node-emoji": "^1.2.1",
+    "node-emoji": "^2.2.0",
     "optimist": "0.4.0",
     "pick-react-known-prop": "0.x.x",
     "proxyquire": "1.3.1",
