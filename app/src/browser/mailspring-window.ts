@@ -354,6 +354,7 @@ export default class MailspringWindow extends EventEmitter {
 
       if (this.exitWhenDone) {
         app.exit(100);
+        return;
       }
 
       if (this.neverClose) {

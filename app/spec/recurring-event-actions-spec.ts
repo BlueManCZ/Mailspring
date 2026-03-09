@@ -552,6 +552,12 @@ describe('modifyEventWithRecurringSupport', function () {
         endDate: { toJSDate: () => new Date(Date.UTC(2026, 2, 1, 9, 0, 0)) },
       },
     }));
+
+    // Stub isRecurringEvent so the CalendarUtils.parseICSString spy above does not
+    // interfere with it (both use the same module cache entry, so the spy would
+    // intercept the parseICSString call inside isRecurringEvent and return an object
+    // without `root`, causing `root.name` to throw).
+    spyOn(ICSEventHelpers, 'isRecurringEvent').andCallFake(ics => ics.includes('RRULE'));
   });
 
   describe('when isException is true (occurrence is already an inline exception)', function () {

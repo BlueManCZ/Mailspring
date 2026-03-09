@@ -576,9 +576,8 @@ describe('ICSEventHelpers.shiftInlineExceptions', function () {
     // Both RECURRENCE-IDs should be shifted by 1 day
     expect(shifted).toContain('20260303T060000Z'); // was 20260302T060000Z
     expect(shifted).toContain('20260304T060000Z'); // was 20260303T060000Z
-    // Old values should be gone
+    // Old value for first exception should be gone
     expect(shifted).not.toContain('20260302T060000Z');
-    expect(shifted).not.toContain('20260303T060000Z');
   });
 });
 

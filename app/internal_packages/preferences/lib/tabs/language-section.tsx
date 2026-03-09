@@ -56,6 +56,7 @@ const LanguageSection = ({ config }) => {
             className="btn btn-small"
             style={{ marginLeft: 9, marginRight: 9 }}
             onClick={() => {
+              console.log('lang section relaunch');
               require('@electron/remote').app.relaunch();
               require('@electron/remote').app.quit();
             }}

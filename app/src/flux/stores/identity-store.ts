@@ -154,8 +154,10 @@ class _IdentityStore extends MailspringStore {
     await this.saveIdentity(null);
     // We need to relaunch the app to clear the webview session
     // and prevent the webview from re signing in with the same MailspringID
-    require('@electron/remote').app.relaunch();
-    require('@electron/remote').app.quit();
+    if (!AppEnv.inSpecMode()) {
+      require('@electron/remote').app.relaunch();
+      require('@electron/remote').app.quit();
+    }
   };
 
   /**
