@@ -80,6 +80,7 @@ export interface MailspringCalendarViewProps extends EventRendererProps {
   onCalendarMouseUp: (args: CalendarEventArgs) => void;
   onCalendarMouseDown: (args: CalendarEventArgs) => void;
   onCalendarMouseMove: (args: CalendarEventArgs) => void;
+  onCalendarClick: (args: CalendarEventArgs) => void;
   onCalendarDoubleClick: (args: CalendarEventArgs) => void;
 
   // Drag-related props
@@ -111,6 +112,7 @@ interface MailspringCalendarState {
   disabledCalendars: string[];
   dragState: DragState | null;
   calendarListVisible: boolean;
+  readOnlyCalendarIds: Set<string>;
 }
 
 export class MailspringCalendar extends React.Component<
@@ -142,6 +144,7 @@ export class MailspringCalendar extends React.Component<
       disabledCalendars: AppEnv.config.get(DISABLED_CALENDARS) || [],
       dragState: null,
       calendarListVisible: AppEnv.config.get(CALENDAR_LIST_VISIBLE) !== false,
+      readOnlyCalendarIds: new Set<string>(),
     };
   }
 
@@ -158,19 +161,6 @@ export class MailspringCalendar extends React.Component<
     }
   }
 
-  /**
-   * Get the set of read-only calendar IDs
-   */
-  _getReadOnlyCalendarIds(): Set<string> {
-    const readOnlyIds = new Set<string>();
-    for (const calendar of this.state.calendars) {
-      if (calendar.readOnly) {
-        readOnlyIds.add(calendar.id);
-      }
-    }
-    return readOnlyIds;
-  }
-
   _subscribeToCalendars() {
     const calQuery = DatabaseStore.findAll<Calendar>(Calendar);
     const calQueryObs = Rx.Observable.fromQuery(calQuery);
@@ -182,11 +172,19 @@ export class MailspringCalendar extends React.Component<
         // Update the color cache with synced calendar colors from CalDAV
         setCalendarColors(calendars);
 
+        const readOnlyCalendarIds = new Set<string>();
+        for (const calendar of calendars) {
+          if (calendar.readOnly) {
+            readOnlyCalendarIds.add(calendar.id);
+          }
+        }
+
         this.setState({
           calendars: calendars,
           calendarsLoaded: true,
           accounts: accountStore.accounts(),
           disabledCalendars: disabledCalendars || [],
+          readOnlyCalendarIds,
         });
       }
     );
@@ -241,10 +239,25 @@ export class MailspringCalendar extends React.Component<
       next = [event];
     }
 
+    // Close any open popover when clicking an event (e.g., if another event's
+    // popover was open, it should close when selecting a different event)
+    Actions.closePopover();
+
     this.setState({
       selectedEvents: next,
       focusedEvent: null,
     });
+  };
+
+  /**
+   * Handle single click on the calendar background (not on an event).
+   * Deselects all events and closes any open popover.
+   */
+  _onCalendarClick = (_args: CalendarEventArgs) => {
+    if (this.state.selectedEvents.length > 0) {
+      this.setState({ selectedEvents: [], focusedEvent: null });
+    }
+    Actions.closePopover();
   };
 
   _onEventDoubleClick = (occurrence: EventOccurrence) => {
@@ -298,6 +311,7 @@ export class MailspringCalendar extends React.Component<
       description: '',
       location: '',
       isAllDay,
+      isRecurring: false,
       isCancelled: false,
       isPending: false,
       isException: false,
@@ -535,14 +549,10 @@ export class MailspringCalendar extends React.Component<
   };
 
   /**
-   * Handle mouse down on calendar (for cancellation via escape or starting new drag)
+   * Handle mouse down on calendar
    */
-  _onCalendarMouseDown = (args: CalendarEventArgs) => {
-    // If there's an active drag, this shouldn't happen (mouseUp should have cleared it)
-    // But just in case, clear it
-    if (this.state.dragState && !args.mouseIsDown) {
-      this.setState({ dragState: null });
-    }
+  _onCalendarMouseDown = (_args: CalendarEventArgs) => {
+    // No-op: mouseUp handles drag completion, mouseMove handles drag updates
   };
 
   /**
@@ -631,10 +641,14 @@ export class MailspringCalendar extends React.Component<
       // Use shared utility for recurring event support (shows dialog if needed)
       const options: EventTimeChangeOptions = {
         event,
-        originalOccurrenceStart: occurrence.start,
+        // For inline exceptions, use the RECURRENCE-ID value (recurrenceIdStart), NOT the
+        // exception's moved DTSTART (start). Using start would produce the wrong RECURRENCE-ID
+        // in the new exception, causing the upsert to miss the existing one and leave a duplicate.
+        originalOccurrenceStart: occurrence.recurrenceIdStart ?? occurrence.start,
         newStart,
         newEnd,
         isAllDay: occurrence.isAllDay,
+        isException: occurrence.isException,
         description: isResize ? localized('Resize event') : localized('Move event'),
       };
 
@@ -690,10 +704,14 @@ export class MailspringCalendar extends React.Component<
       // Use shared utility for the modification logic (includes undo support)
       const options: EventTimeChangeOptions = {
         event,
-        originalOccurrenceStart: dragState.event.start,
+        // For inline exceptions, use the RECURRENCE-ID value (recurrenceIdStart), NOT the
+        // exception's moved DTSTART (start). Using start would produce the wrong RECURRENCE-ID
+        // in the new exception, causing the upsert to miss the existing one and leave a duplicate.
+        originalOccurrenceStart: dragState.event.recurrenceIdStart ?? dragState.event.start,
         newStart,
         newEnd,
         isAllDay: dragState.event.isAllDay,
+        isException: dragState.event.isException,
         description:
           dragState.mode === 'move' ? localized('Move event') : localized('Resize event'),
       };
@@ -801,13 +819,14 @@ export class MailspringCalendar extends React.Component<
         onCalendarMouseUp={this._onCalendarMouseUp}
         onCalendarMouseDown={this._onCalendarMouseDown}
         onCalendarMouseMove={this._onCalendarMouseMove}
+        onCalendarClick={this._onCalendarClick}
         onCalendarDoubleClick={this._onCalendarDoubleClick}
         onEventClick={this._onEventClick}
         onEventDoubleClick={this._onEventDoubleClick}
         onEventFocused={this._onEventFocused}
         dragState={this.state.dragState}
         onEventDragStart={this._onEventDragStart}
-        readOnlyCalendarIds={this._getReadOnlyCalendarIds()}
+        readOnlyCalendarIds={this.state.readOnlyCalendarIds}
       />
     );
   }

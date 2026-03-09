@@ -315,6 +315,8 @@ export interface CreateCalendarEventOptions {
   description?: string;
   location?: string;
   attendees?: Array<{ email: string; name?: string }>;
+  recurrenceRule?: string;
+  timezone?: string;
 }
 
 /**
@@ -329,10 +331,11 @@ export async function createCalendarEvent(options: CreateCalendarEventOptions): 
     start: options.start,
     end: options.end,
     isAllDay: options.isAllDay,
-    timezone: DateUtils.timeZone,
+    timezone: options.timezone || DateUtils.timeZone,
     description: options.description,
     location: options.location,
     attendees: options.attendees,
+    recurrenceRule: options.recurrenceRule,
   });
 
   const event = new Event({
