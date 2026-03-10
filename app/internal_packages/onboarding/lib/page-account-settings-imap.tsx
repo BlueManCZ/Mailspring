@@ -58,8 +58,8 @@ class AccountIMAPSettingsForm extends React.Component<AccountIMAPSettingsFormPro
     return { errorMessage, errorFieldNames, populated: true };
   };
 
-  componentDidMount () {
-    ipcRenderer.send('resize-window', {width: 900, height: 660});
+  componentDidMount() {
+    ipcRenderer.send('resize-window', { width: 900, height: 660 });
   }
 
   renderPortDropdown(protocol) {
@@ -207,7 +207,11 @@ class AccountIMAPSettingsForm extends React.Component<AccountIMAPSettingsFormPro
           {this.renderPortDropdown(type)}
           {this.renderSecurityDropdown(type)}
         </div>
-        <FormField field={`settings.${type}_username`} title={localized('Username')} {...this.props} />
+        <FormField
+          field={`settings.${type}_username`}
+          title={localized('Username')}
+          {...this.props}
+        />
         <FormField
           field={`settings.${type}_password`}
           title={localized('Password')}
@@ -215,7 +219,11 @@ class AccountIMAPSettingsForm extends React.Component<AccountIMAPSettingsFormPro
           {...this.props}
         />
         {type === 'imap' && (
-          <FormField field={`settings.container_folder`} title={localized('Custom Container Folder')} {...this.props} />
+          <FormField
+            field={`settings.container_folder`}
+            title={localized('Custom Container Folder')}
+            {...this.props}
+          />
         )}
       </div>
     );

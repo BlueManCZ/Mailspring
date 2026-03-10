@@ -40,7 +40,9 @@ export class YYMMDDInput extends React.Component<YYMMDDInputProps> {
               onBlur={this._onBlur}
             />
           </div>
-          <span aria-hidden="true" style={{ alignSelf: 'center', marginRight: 5 }}>/</span>
+          <span aria-hidden="true" style={{ alignSelf: 'center', marginRight: 5 }}>
+            /
+          </span>
           <div className="contact-edit-field">
             <input
               max={12}
@@ -54,7 +56,9 @@ export class YYMMDDInput extends React.Component<YYMMDDInputProps> {
               onBlur={this._onBlur}
             />
           </div>
-          <span aria-hidden="true" style={{ alignSelf: 'center', marginRight: 5 }}>/</span>
+          <span aria-hidden="true" style={{ alignSelf: 'center', marginRight: 5 }}>
+            /
+          </span>
           <div className="contact-edit-field">
             <input
               max={31}

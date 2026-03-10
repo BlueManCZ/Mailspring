@@ -21,7 +21,7 @@ const ContactColumn = new ListTabular.Column({
   resolver: (contact: Contact) => {
     // until we revisit the UI to accommodate more icons
     const account = AccountStore.accountForId(contact.accountId);
-    let style: CSSProperties = {}
+    let style: CSSProperties = {};
     if (account && account.color) {
       style = {
         height: '50%',
@@ -29,7 +29,7 @@ const ContactColumn = new ListTabular.Column({
         borderLeftWidth: '4px',
         borderLeftColor: account.color,
         borderLeftStyle: 'solid',
-      }
+      };
     }
     return (
       <div style={{ display: 'flex', alignItems: 'flex-start' }}>
@@ -157,7 +157,10 @@ class ContactListWithData extends React.Component<ContactListProps, ContactListS
       return;
     }
 
-    importContactsFromPaths(vcfFiles.map(f => webUtils.getPathForFile(f)), perspective.accountId);
+    importContactsFromPaths(
+      vcfFiles.map(f => webUtils.getPathForFile(f)),
+      perspective.accountId
+    );
   };
 
   render() {
@@ -230,8 +233,9 @@ const ContactListSearchWithData = (props: ContactListSearchWithDataProps) => {
         type="text"
         ref={searchEl}
         value={props.search}
-        placeholder={`${localized('Search')} ${props.perspective.type === 'unified' ? 'All Contacts' : props.perspective.label
-          }`}
+        placeholder={`${localized('Search')} ${
+          props.perspective.type === 'unified' ? 'All Contacts' : props.perspective.label
+        }`}
         onChange={e => props.setSearch(e.currentTarget.value)}
       />
       {props.search.length > 0 && (

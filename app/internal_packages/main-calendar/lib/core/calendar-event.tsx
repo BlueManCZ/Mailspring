@@ -115,8 +115,10 @@ export class CalendarEvent extends React.Component<CalendarEventProps, CalendarE
   }
 
   _getStyles() {
-    let styles: CSSProperties & { '--event-band-color'?: string; '--event-text-color'?: string } =
-      {};
+    let styles: CSSProperties & {
+      '--event-band-color'?: string;
+      '--event-text-color'?: string;
+    } = {};
     if (this.props.direction === 'vertical') {
       styles = this._getDimensions();
     } else if (this.props.direction === 'horizontal') {
@@ -387,11 +389,11 @@ export class CalendarEvent extends React.Component<CalendarEventProps, CalendarE
         tabIndex={0}
         style={styles}
         className={classNames}
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
           onClick(e, event);
         }}
-        onDoubleClick={(e) => {
+        onDoubleClick={e => {
           e.stopPropagation();
           onDoubleClick(event);
         }}

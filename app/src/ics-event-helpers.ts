@@ -660,7 +660,10 @@ export function applyEditsToException(
           : typeof (rid as any).toString === 'function'
           ? (rid as any).toString()
           : String(rid);
-      if (ridStr === recurrenceId || ridStr.replace(/[^0-9TZ]/g, '') === recurrenceId.replace(/[^0-9TZ]/g, '')) {
+      if (
+        ridStr === recurrenceId ||
+        ridStr.replace(/[^0-9TZ]/g, '') === recurrenceId.replace(/[^0-9TZ]/g, '')
+      ) {
         exceptionVevent = vevent;
         break;
       }

@@ -207,7 +207,9 @@ export class MonthViewEvent extends React.Component<MonthViewEventProps, MonthVi
         tabIndex={0}
       >
         <span className="month-view-event-title">{event.title}</span>
-        {event.isRecurring && !event.isCancelled && !event.isException && <RecurringIcon size={9} />}
+        {event.isRecurring && !event.isCancelled && !event.isException && (
+          <RecurringIcon size={9} />
+        )}
       </div>
     );
   }

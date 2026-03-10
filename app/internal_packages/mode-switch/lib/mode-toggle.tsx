@@ -62,7 +62,11 @@ export default class ModeToggle extends React.Component<
         aria-label={this.state.hidden ? localized('Show Sidebar') : localized('Hide Sidebar')}
         onClick={this._onToggleMode}
       >
-        <RetinaImg name="toolbar-person-sidebar.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+        <RetinaImg
+          name="toolbar-person-sidebar.png"
+          mode={RetinaImg.Mode.ContentIsMask}
+          aria-hidden="true"
+        />
       </button>
     );
   }

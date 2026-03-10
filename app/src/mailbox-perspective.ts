@@ -374,7 +374,10 @@ class CategoryMailboxPerspective extends MailboxPerspective {
   isEqual(other) {
     return (
       super.isEqual(other) &&
-      _.isEqual(this.categories().map(c => c.id), other.categories().map(c => c.id))
+      _.isEqual(
+        this.categories().map(c => c.id),
+        other.categories().map(c => c.id)
+      )
     );
   }
 

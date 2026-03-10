@@ -136,7 +136,11 @@ class TemplatePicker extends React.Component<{
           aria-hidden="true"
         />
         &nbsp;
-        <RetinaImg name="icon-composer-dropdown.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+        <RetinaImg
+          name="icon-composer-dropdown.png"
+          mode={RetinaImg.Mode.ContentIsMask}
+          aria-hidden="true"
+        />
       </button>
     );
   }

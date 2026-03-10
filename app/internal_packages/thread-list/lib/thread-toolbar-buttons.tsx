@@ -51,7 +51,11 @@ export class ArchiveButton extends React.Component<{ items: Thread[] }> {
           aria-label={localized('Archive')}
           onClick={this._onArchive}
         >
-          <RetinaImg name="toolbar-archive.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+          <RetinaImg
+            name="toolbar-archive.png"
+            mode={RetinaImg.Mode.ContentIsMask}
+            aria-hidden="true"
+          />
         </button>
       </BindGlobalCommands>
     );
@@ -94,7 +98,11 @@ export class TrashButton extends React.Component<{ items: Thread[] }> {
           aria-label={localized('Move to Trash')}
           onClick={this._onRemove}
         >
-          <RetinaImg name="toolbar-trash.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+          <RetinaImg
+            name="toolbar-trash.png"
+            mode={RetinaImg.Mode.ContentIsMask}
+            aria-hidden="true"
+          />
         </button>
       </BindGlobalCommands>
     );
@@ -241,7 +249,11 @@ export class MarkAsSpamButton extends React.Component<{ items: Thread[] }> {
             aria-label={localized('Not Spam')}
             onClick={this._onNotSpam}
           >
-            <RetinaImg name="toolbar-not-spam.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+            <RetinaImg
+              name="toolbar-not-spam.png"
+              mode={RetinaImg.Mode.ContentIsMask}
+              aria-hidden="true"
+            />
           </button>
         </BindGlobalCommands>
       );
@@ -263,7 +275,11 @@ export class MarkAsSpamButton extends React.Component<{ items: Thread[] }> {
           aria-label={localized('Mark as Spam')}
           onClick={this._onMarkAsSpam}
         >
-          <RetinaImg name="toolbar-spam.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+          <RetinaImg
+            name="toolbar-spam.png"
+            mode={RetinaImg.Mode.ContentIsMask}
+            aria-hidden="true"
+          />
         </button>
       </BindGlobalCommands>
     );
@@ -360,7 +376,11 @@ export class ToggleUnreadButton extends React.Component<{ items: Thread[] }> {
           aria-label={label}
           onClick={this._onClick}
         >
-          <RetinaImg name={`toolbar-markas${key}.png`} mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+          <RetinaImg
+            name={`toolbar-markas${key}.png`}
+            mode={RetinaImg.Mode.ContentIsMask}
+            aria-hidden="true"
+          />
         </button>
       </BindGlobalCommands>
     );
@@ -443,7 +463,11 @@ class ThreadArrowButton extends React.Component<
         onKeyDown={this._onKeyDown}
         title={title}
       >
-        <RetinaImg name={`toolbar-${direction}-arrow.png`} mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+        <RetinaImg
+          name={`toolbar-${direction}-arrow.png`}
+          mode={RetinaImg.Mode.ContentIsMask}
+          aria-hidden="true"
+        />
       </div>
     );
   }

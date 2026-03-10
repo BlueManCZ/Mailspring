@@ -24,7 +24,12 @@ function loadModule() {
 
 function mockExecFileSuccess(stdout: string) {
   execFileSpy.andCallFake(
-    (_cmd: string, _args: string[], _opts: any, callback: (err: Error | null, stdout: string) => void) => {
+    (
+      _cmd: string,
+      _args: string[],
+      _opts: any,
+      callback: (err: Error | null, stdout: string) => void
+    ) => {
       callback(null, stdout);
     }
   );
@@ -32,7 +37,12 @@ function mockExecFileSuccess(stdout: string) {
 
 function mockExecFileError(code = 'ENOENT') {
   execFileSpy.andCallFake(
-    (_cmd: string, _args: string[], _opts: any, callback: (err: Error | null, stdout: string) => void) => {
+    (
+      _cmd: string,
+      _args: string[],
+      _opts: any,
+      callback: (err: Error | null, stdout: string) => void
+    ) => {
       const error = new Error('Command not found') as NodeJS.ErrnoException;
       error.code = code;
       callback(error, '');
@@ -42,7 +52,12 @@ function mockExecFileError(code = 'ENOENT') {
 
 function mockExecFileByCommand(routes: Record<string, { stdout?: string; error?: boolean }>) {
   execFileSpy.andCallFake(
-    (cmd: string, _args: string[], _opts: any, callback: (err: Error | null, stdout: string) => void) => {
+    (
+      cmd: string,
+      _args: string[],
+      _opts: any,
+      callback: (err: Error | null, stdout: string) => void
+    ) => {
       const route = routes[cmd];
       if (route && !route.error) {
         callback(null, route.stdout || '');

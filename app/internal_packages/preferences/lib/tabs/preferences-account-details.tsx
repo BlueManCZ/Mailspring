@@ -70,7 +70,10 @@ class PreferencesAccountDetails extends Component<
     this.state = { account: props.account.clone() };
   }
 
-  componentDidUpdate(prevProps: { account: Account; onAccountUpdated: (account: Account, newAccount: Account) => void }) {
+  componentDidUpdate(prevProps: {
+    account: Account;
+    onAccountUpdated: (account: Account, newAccount: Account) => void;
+  }) {
     if (prevProps.account !== this.props.account) {
       this.setState({ account: this.props.account.clone() });
     }
@@ -289,7 +292,9 @@ class PreferencesAccountDetails extends Component<
     return (
       <div className="account-details">
         {this._renderSyncErrorDetails()}
-        <label htmlFor="account-label"><h6>{localized('Account Label')}</h6></label>
+        <label htmlFor="account-label">
+          <h6>{localized('Account Label')}</h6>
+        </label>
         <input
           id="account-label"
           type="text"
@@ -297,7 +302,9 @@ class PreferencesAccountDetails extends Component<
           onBlur={this._saveChanges}
           onChange={e => this._setState({ label: e.target.value })}
         />
-        <label htmlFor="account-sender-name"><h6>{localized('Sender Name')}</h6></label>
+        <label htmlFor="account-sender-name">
+          <h6>{localized('Sender Name')}</h6>
+        </label>
         <input
           id="account-sender-name"
           type="text"
@@ -340,7 +347,9 @@ class PreferencesAccountDetails extends Component<
         ) : (
           undefined
         )}
-        <label htmlFor="account-color"><h6>{localized('Account Color')}</h6></label>
+        <label htmlFor="account-color">
+          <h6>{localized('Account Color')}</h6>
+        </label>
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
           <input
             id="account-color"

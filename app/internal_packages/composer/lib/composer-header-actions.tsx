@@ -100,7 +100,10 @@ export default class ComposerHeaderActions extends React.Component<ComposerHeade
     }
 
     return (
-      <RovingTabIndexToolbar label={localized('Composer header actions')} className="composer-header-actions">
+      <RovingTabIndexToolbar
+        label={localized('Composer header actions')}
+        className="composer-header-actions"
+      >
         {items}
       </RovingTabIndexToolbar>
     );

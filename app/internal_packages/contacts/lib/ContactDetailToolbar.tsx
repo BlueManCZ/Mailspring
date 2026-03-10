@@ -119,7 +119,11 @@ class ContactDetailToolbarWithData extends React.Component<ContactDetailToolbarP
             className={`btn btn-toolbar ${actionSet.length === 0 && 'btn-disabled'}`}
             onClick={actionSet.length > 0 ? this._onDelete : undefined}
           >
-            <RetinaImg name="toolbar-trash.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+            <RetinaImg
+              name="toolbar-trash.png"
+              mode={RetinaImg.Mode.ContentIsMask}
+              aria-hidden="true"
+            />
           </button>
           <button
             tabIndex={-1}
@@ -128,7 +132,11 @@ class ContactDetailToolbarWithData extends React.Component<ContactDetailToolbarP
             className={`btn btn-toolbar ${actionSet.length === 0 && 'btn-disabled'}`}
             onClick={actionSet.length > 0 ? () => exportContactsToFile(actionSet) : undefined}
           >
-            <RetinaImg name="toolbar-export-contact.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+            <RetinaImg
+              name="toolbar-export-contact.png"
+              mode={RetinaImg.Mode.ContentIsMask}
+              aria-hidden="true"
+            />
           </button>
           <button
             tabIndex={-1}

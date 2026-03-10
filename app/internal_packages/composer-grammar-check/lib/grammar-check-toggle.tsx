@@ -95,10 +95,20 @@ export class GrammarCheckToggle extends React.Component<{
     }
 
     return (
-      <button tabIndex={-1} className={className} onClick={this._onClick} title={title} aria-label={title}>
+      <button
+        tabIndex={-1}
+        className={className}
+        onClick={this._onClick}
+        title={title}
+        aria-label={title}
+      >
         {onByDefaultButUsedUp && (
           <div style={{ position: 'absolute', zIndex: 2, transform: 'translate(14px, -4px)' }}>
-            <RetinaImg name="tiny-warning-sign.png" mode={RetinaImg.Mode.ContentPreserve} aria-hidden="true" />
+            <RetinaImg
+              name="tiny-warning-sign.png"
+              mode={RetinaImg.Mode.ContentPreserve}
+              aria-hidden="true"
+            />
           </div>
         )}
         <span className="grammar-check-icon-wrap">

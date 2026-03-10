@@ -107,7 +107,7 @@ class PreferencesTabsBar extends React.Component<PreferencesTabBarProps> {
   };
 
   renderTabs() {
-    return this.props.tabs.map((tabItem) => (
+    return this.props.tabs.map(tabItem => (
       <PreferencesTabItem key={tabItem.tabId} tabItem={tabItem} selection={this.props.selection} />
     ));
   }

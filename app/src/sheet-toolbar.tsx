@@ -131,7 +131,7 @@ class ToolbarWindowControls extends React.Component<Record<string, unknown>, { a
     this.setState({ alt: AppEnv.keymaps.getIsAltKeyDown() });
   };
 
-  _onMaximize = (event) => {
+  _onMaximize = event => {
     if (process.platform === 'darwin' && !event.altKey) {
       AppEnv.setFullScreen(!AppEnv.isFullScreen());
     } else {
@@ -154,9 +154,24 @@ class ToolbarWindowControls extends React.Component<Record<string, unknown>, { a
         label={localized('Window Controls')}
         className={`toolbar-window-controls alt-${this.state.alt}`}
       >
-        <button tabIndex={-1} className="close" aria-label={localized('Close window')} onClick={() => AppEnv.close()} />
-        <button tabIndex={-1} className="minimize" aria-label={localized('Minimize window')} onClick={() => AppEnv.minimize()} />
-        <button tabIndex={-1} className="maximize" aria-label={localized('Maximize window')} onClick={this._onMaximize} />
+        <button
+          tabIndex={-1}
+          className="close"
+          aria-label={localized('Close window')}
+          onClick={() => AppEnv.close()}
+        />
+        <button
+          tabIndex={-1}
+          className="minimize"
+          aria-label={localized('Minimize window')}
+          onClick={() => AppEnv.minimize()}
+        />
+        <button
+          tabIndex={-1}
+          className="maximize"
+          aria-label={localized('Maximize window')}
+          onClick={this._onMaximize}
+        />
       </RovingTabIndexToolbar>
     );
   }
@@ -182,8 +197,17 @@ class ToolbarMenuControl extends React.Component {
 
     return (
       <div className="toolbar-menu-control">
-        <button tabIndex={0} className="btn btn-toolbar" aria-label={localized('Application menu')} onClick={this._onOpenMenu}>
-          <RetinaImg name="windows-menu-icon.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+        <button
+          tabIndex={0}
+          className="btn btn-toolbar"
+          aria-label={localized('Application menu')}
+          onClick={this._onOpenMenu}
+        >
+          <RetinaImg
+            name="windows-menu-icon.png"
+            mode={RetinaImg.Mode.ContentIsMask}
+            aria-hidden="true"
+          />
         </button>
       </div>
     );
@@ -317,7 +341,9 @@ export default class Toolbar extends React.Component<ToolbarProps, ToolbarState>
     // Record our overall height for sheets
     if (el.clientHeight !== lastReportedToolbarHeight) {
       lastReportedToolbarHeight = el.clientHeight;
-      require('@electron/remote').getCurrentWindow().setSheetOffset(el.clientHeight);
+      require('@electron/remote')
+        .getCurrentWindow()
+        .setSheetOffset(el.clientHeight);
     }
   }
 
@@ -380,7 +406,7 @@ export default class Toolbar extends React.Component<ToolbarProps, ToolbarState>
   }
 
   _flexboxForComponents(components) {
-    const elements = components.map((Component) => (
+    const elements = components.map(Component => (
       <Component key={Component.displayName} {...this.props} />
     ));
     return (

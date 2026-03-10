@@ -30,7 +30,11 @@ export class QuickEventButton extends React.Component<Record<string, unknown>> {
           aria-label={localized('Create new event')}
           onClick={this.onClick}
         >
-          <RetinaImg name="toolbar-compose.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+          <RetinaImg
+            name="toolbar-compose.png"
+            mode={RetinaImg.Mode.ContentIsMask}
+            aria-hidden="true"
+          />
         </button>
       </BindGlobalCommands>
     );

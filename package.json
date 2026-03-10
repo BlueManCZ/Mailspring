@@ -57,6 +57,7 @@
     "electron-winstaller": "5.4.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "7.2.0",
+    "eslint-plugin-prettier": "3",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "7.22.0",
@@ -80,7 +81,7 @@
   "scripts": {
     "postinstall": "node scripts/postinstall.js",
     "start": "electron ./app --enable-logging --dev",
-    "lint": "grunt lint --gruntfile=app/build/Gruntfile.js --base=./",
+    "lint": "eslint --fix -c .eslintrc app/src/**/*.ts app/internal_packages/**/*.tsx",
     "typecheck": "./node_modules/.bin/tsc -p app/tsconfig.json --noEmit",
     "test": "electron ./app --enable-logging --test",
     "test-window": "electron ./app --enable-logging --test=window",

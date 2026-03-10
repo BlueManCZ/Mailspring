@@ -17,7 +17,11 @@ export default class ComposeButton extends React.Component {
         aria-label={localized('Compose new message')}
         onClick={this._onNewCompose}
       >
-        <RetinaImg name="toolbar-compose.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+        <RetinaImg
+          name="toolbar-compose.png"
+          mode={RetinaImg.Mode.ContentIsMask}
+          aria-hidden="true"
+        />
       </button>
     );
   }

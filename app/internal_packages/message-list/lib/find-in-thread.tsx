@@ -148,13 +148,21 @@ export default class FindInThread extends React.Component<
                   disabled={!this._navEnabled()}
                   onClick={this._onNextResult}
                 >
-                  <RetinaImg name="ic-findinthread-next.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+                  <RetinaImg
+                    name="ic-findinthread-next.png"
+                    mode={RetinaImg.Mode.ContentIsMask}
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
             </div>
 
             <button className={btnCls} aria-label={localized('Close')} onClick={this._clearSearch}>
-              <RetinaImg name="ic-findinthread-close.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+              <RetinaImg
+                name="ic-findinthread-close.png"
+                mode={RetinaImg.Mode.ContentIsMask}
+                aria-hidden="true"
+              />
             </button>
           </div>
         </KeyCommandsRegion>

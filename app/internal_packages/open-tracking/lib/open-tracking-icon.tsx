@@ -73,12 +73,16 @@ export default class OpenTrackingIcon extends React.Component<{
         aria-label={title}
         className="open-tracking-icon"
         onMouseDown={opened ? this.onMouseDown : null}
-        onKeyDown={opened ? e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.onMouseDown();
-          }
-        } : undefined}
+        onKeyDown={
+          opened
+            ? e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  this.onMouseDown();
+                }
+              }
+            : undefined
+        }
       >
         <RetinaImg
           className={opened ? 'opened' : 'unopened'}

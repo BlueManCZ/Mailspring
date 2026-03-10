@@ -48,11 +48,7 @@ export const SubjectLineIcons: React.FunctionComponent<SubjectLineIconsProps> = 
         }
       }}
     >
-      <RetinaImg
-        name="print.png"
-        mode={RetinaImg.Mode.ContentIsMask}
-        aria-hidden="true"
-      />
+      <RetinaImg name="print.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
     </div>
     {AppEnv.isThreadWindow() ? (
       <div
@@ -68,11 +64,7 @@ export const SubjectLineIcons: React.FunctionComponent<SubjectLineIconsProps> = 
           }
         }}
       >
-        <RetinaImg
-          name="thread-popin.png"
-          mode={RetinaImg.Mode.ContentIsMask}
-          aria-hidden="true"
-        />
+        <RetinaImg name="thread-popin.png" mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
       </div>
     ) : (
       <div

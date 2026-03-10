@@ -95,7 +95,11 @@ class MovePicker extends React.Component<{ items: Thread[] }> {
             onClick={this._onOpenMovePopover}
             className={'btn btn-toolbar btn-category-picker'}
           >
-            <RetinaImg name={'toolbar-movetofolder.png'} mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+            <RetinaImg
+              name={'toolbar-movetofolder.png'}
+              mode={RetinaImg.Mode.ContentIsMask}
+              aria-hidden="true"
+            />
           </button>
           {this._account.usesLabels() && (
             <button
@@ -106,7 +110,11 @@ class MovePicker extends React.Component<{ items: Thread[] }> {
               onClick={this._onOpenLabelsPopover}
               className={'btn btn-toolbar btn-category-picker'}
             >
-              <RetinaImg name={'toolbar-tag.png'} mode={RetinaImg.Mode.ContentIsMask} aria-hidden="true" />
+              <RetinaImg
+                name={'toolbar-tag.png'}
+                mode={RetinaImg.Mode.ContentIsMask}
+                aria-hidden="true"
+              />
             </button>
           )}
         </KeyCommandsRegion>
