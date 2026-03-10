@@ -289,15 +289,14 @@ export class ContactDetailEdit extends React.Component<{
                     </label>
                   </div>
                   <div className="contact-edit-field" style={{ flex: 0.7 }}>
-                    <label>
-                      Type
-                      <TypeaheadFreeInput
-                        placeholder="Label"
-                        suggestions={BaseTypes}
-                        value={item.type || ''}
-                        onChange={e => onChange({ type: e.currentTarget.value })}
-                      />
-                    </label>
+                    <span aria-hidden="true" className="form-spacer" />
+                    <TypeaheadFreeInput
+                      aria-label="Type"
+                      placeholder="Label"
+                      suggestions={BaseTypes}
+                      value={item.type || ''}
+                      onChange={e => onChange({ type: e.currentTarget.value })}
+                    />
                   </div>
                 </div>
               )}
