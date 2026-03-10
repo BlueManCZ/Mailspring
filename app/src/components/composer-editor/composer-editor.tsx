@@ -117,7 +117,6 @@ export class ComposerEditor extends React.Component<ComposerEditorProps, Compose
     }
   }
 
-
   focus = () => {
     this.editor
       .focus()
@@ -269,12 +268,15 @@ export class ComposerEditor extends React.Component<ComposerEditorProps, Compose
     const reason = getDocumentBrokenReason(change.value);
     if (reason) {
       console.warn(`ComposerEditor: ${reason}, inserting empty paragraph to recover.`);
-      const op = Operation.create({
+      const op = require('slate').Operation.create({
         type: 'insert_node',
-        path: new Immutable.List([0]),
-        node: Block.create({ type: 'div', nodes: [Text.create('')] }),
+        path: Immutable.List([0]),
+        node: Block.create({ type: 'div', nodes: Immutable.List([Text.create('')]) }),
       });
-      this.props.onChange({ operations: change.operations.push(op), value: op.apply(change.value) });
+      this.props.onChange({
+        operations: change.operations.push(op),
+        value: op.apply(change.value),
+      });
       return;
     }
 
@@ -370,13 +372,11 @@ export function handleFilePasted(event: ClipboardEvent, onFileReceived: (path: s
     new RegExp(String.fromCharCode(0), 'g'),
     ''
   );
-  const xdgCopiedFiles = (
-    (ElectronClipboard.read('text/uri-list') || '')
-      .split('\r\n') // yes, really
-      .filter(path => path.startsWith('file://'))
-      .map(path => path.replace('file://', ''))
-      .filter(path => path.length)
-  )
+  const xdgCopiedFiles = (ElectronClipboard.read('text/uri-list') || '')
+    .split('\r\n') // yes, really
+    .filter(path => path.startsWith('file://'))
+    .map(path => path.replace('file://', ''))
+    .filter(path => path.length);
   if (macCopiedFile.length || winCopiedFile.length) {
     onFileReceived(macCopiedFile || winCopiedFile);
     return true;

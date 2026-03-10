@@ -566,8 +566,7 @@ export class MailspringCalendar extends React.Component<
     const occurrence = this.state.selectedEvents[0];
 
     // Check if event is in a read-only calendar
-    const readOnlyCalendarIds = this._getReadOnlyCalendarIds();
-    if (readOnlyCalendarIds.has(occurrence.calendarId)) {
+    if (this.state.readOnlyCalendarIds.has(occurrence.calendarId)) {
       return;
     }
 
@@ -685,7 +684,7 @@ export class MailspringCalendar extends React.Component<
       }
 
       // Check if calendar is read-only (safety check)
-      const calendar = this.state.calendars.find((c) => c.id === event.calendarId);
+      const calendar = this.state.calendars.find(c => c.id === event.calendarId);
       if (calendar?.readOnly) {
         console.warn('Cannot modify event in read-only calendar');
         return;
