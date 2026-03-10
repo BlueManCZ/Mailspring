@@ -70,7 +70,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       padding: 3px 0;
-      label {
+      span[aria-hidden="true"] {
         color: @text-color-very-subtle;
         display: inline-block;
         width: 58px;
@@ -85,12 +85,15 @@
         }
       }
       div {
-        display: inline-block;
+        display: inline-flex;
         white-space: pre-wrap;
+        width: calc(100% - 58px);
       }
       a {
         color: black;
         text-decoration: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &:hover {
           text-decoration: underline;
         }
@@ -101,9 +104,11 @@
           padding-right: 7px;
         }
         padding-left: 7px;
+        flex-shrink: 0;
         color: @text-color-very-subtle;
         text-transform: capitalize;
         font-size: 0.9em;
+        width: initial;
       }
     }
   }
