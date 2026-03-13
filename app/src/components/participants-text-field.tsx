@@ -252,10 +252,12 @@ export default class ParticipantsTextField extends React.Component<ParticipantsT
           tokenIsValid={p => ContactStore.isValidContact(p)}
           tokenRenderer={TokenRenderer}
           onRequestCompletions={async input =>
-            (await Promise.all([
-              ContactStore.searchContactGroups(input),
-              ContactStore.searchContacts(input),
-            ])).flat()
+            (
+              await Promise.all([
+                ContactStore.searchContactGroups(input),
+                ContactStore.searchContacts(input),
+              ])
+            ).flat()
           }
           shouldBreakOnKeydown={this._shouldBreakOnKeydown}
           onInputTrySubmit={this._onInputTrySubmit}
