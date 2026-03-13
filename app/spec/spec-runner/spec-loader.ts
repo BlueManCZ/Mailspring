@@ -5,6 +5,9 @@ import fs from 'fs-plus';
 import path from 'path';
 
 class N1SpecLoader {
+  jasmineEnv: any;
+  loadSettings: any;
+
   loadSpecs(loadSettings, jasmineEnv) {
     this.jasmineEnv = jasmineEnv;
     this.loadSettings = loadSettings;
@@ -26,18 +29,18 @@ class N1SpecLoader {
     const fixturesPackagesPath = path.join(__dirname, 'fixtures', 'packages');
 
     // EDGEHILL_CORE: Look in internal_packages instead of node_modules
-    let packagePaths = [];
+    let packagePathsList: string[] = [];
     const iterable = fs.listSync(path.join(resourcePath, 'internal_packages'));
     for (let i = 0; i < iterable.length; i++) {
       const packagePath = iterable[i];
       if (fs.isDirectorySync(packagePath)) {
-        packagePaths.push(packagePath);
+        packagePathsList.push(packagePath);
       }
     }
 
-    packagePaths = _.uniq(packagePaths);
+    packagePathsList = _.uniq(packagePathsList);
 
-    packagePaths = _.groupBy(packagePaths, packagePath => {
+    const packagePaths: { [key: string]: string[] } = _.groupBy(packagePathsList, packagePath => {
       if (packagePath.indexOf(`${fixturesPackagesPath}${path.sep}`) === 0) {
         return 'fixtures';
       } else if (packagePath.indexOf(`${resourcePath}${path.sep}`) === 0) {

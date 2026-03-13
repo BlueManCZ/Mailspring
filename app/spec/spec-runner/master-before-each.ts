@@ -69,7 +69,7 @@ class MasterBeforeEach {
   _resetTaskQueue() {
     TaskQueue._queue = [];
     TaskQueue._completed = [];
-    TaskQueue._onlineStatus = true;
+    (TaskQueue as any)._onlineStatus = true;
   }
 
   _resetTimeOverride() {
@@ -79,7 +79,7 @@ class MasterBeforeEach {
 
   _resetAccountStore() {
     // Log in a fake user, and ensure that accountForId, etc. work
-    AccountStore._accounts = [
+    (AccountStore as any)._accounts = [
       new Account({
         provider: 'gmail',
         name: TestConstants.TEST_ACCOUNT_NAME,
