@@ -31,6 +31,17 @@ mousetrap.prototype.stopCallback = (e, element, combo) => {
     return true;
   }
 
+  if (e.isPropagationStopped()) {
+    return true;
+  }
+  // Stop mousetrap from firing global commands when focus is within a tree widget
+  // (e.g. the mailbox outline view), so the tree's own arrow-key navigation works.
+  const withinTree = !!element.closest('[role="tree"]');
+  if (withinTree) {
+    const isPlainKey = !/(mod|command|ctrl)/.test(combo);
+    return isPlainKey;
+  }
+
   const withinTextInput =
     element.tagName === 'INPUT' ||
     element.tagName === 'SELECT' ||
