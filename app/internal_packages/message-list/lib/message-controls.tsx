@@ -178,9 +178,7 @@ export default class MessageControls extends React.Component<MessageControlsProp
         />
         <div
           className="message-actions-ellipsis"
-          role="button"
           tabIndex={-1}
-          aria-label={localized('More message actions')}
           onClick={this._onShowActionsMenu}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
