@@ -76,6 +76,7 @@ class N1SpecLoader {
       regex = new RegExp(specFilePattern);
     }
 
+    if (!fs.existsSync(specDirectory)) return;
     for (const specFilePath of (fs.readdirSync(specDirectory, { recursive: true }) as string[]).map(f => path.join(specDirectory, f))) {
       if (regex.test(specFilePath)) {
         try {
