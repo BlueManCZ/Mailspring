@@ -177,9 +177,14 @@ export default class ThemeManager {
 
   resolveStylesheetPath(stylesheetPath) {
     if (path.extname(stylesheetPath).length > 0) {
-      return fs.resolveOnLoadPath(stylesheetPath);
+      const p = path.resolve(__dirname, stylesheetPath);
+      return fs.existsSync(p) ? p : null;
     }
-    return fs.resolveOnLoadPath(stylesheetPath, ['css', 'less']);
+    for (const ext of ['css', 'less']) {
+      const p = path.resolve(__dirname, `${stylesheetPath}.${ext}`);
+      if (fs.existsSync(p)) return p;
+    }
+    return null;
   }
 
   cssContentsOfStylesheet(stylesheetPath) {
