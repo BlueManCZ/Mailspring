@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { Emitter } from 'event-kit';
 import path from 'path';
-import fs from 'fs-plus';
+import fs from 'fs';
 import { localized } from './intl';
 import LessCompileCache from './less-compile-cache';
 import PackageManager from './package-manager';
@@ -72,7 +72,8 @@ export default class ThemeManager {
   reloadCoreStyles() {
     console.log('Reloading /static and /internal_packages to incorporate LESS changes');
     const reloadStylesIn = folder => {
-      fs.listTreeSync(folder)
+      (fs.readdirSync(folder, { recursive: true }) as string[])
+        .map(f => path.join(folder, f))
         .filter(stylePath => stylePath.endsWith('.less'))
         .forEach(stylePath => {
           const styleEl = document.head.querySelector(`[source-path="${stylePath}"]`);

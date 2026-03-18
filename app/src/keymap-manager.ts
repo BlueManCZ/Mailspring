@@ -1,4 +1,4 @@
-import fs from 'fs-plus';
+import fs from 'fs';
 import path from 'path';
 import mousetrap from 'mousetrap';
 import { ipcRenderer } from 'electron';
