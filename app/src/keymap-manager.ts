@@ -42,7 +42,9 @@ mousetrap.prototype.stopCallback = (e, element, combo) => {
   if (withinTree) {
     const isPlainKey = !/(mod|command|ctrl)/.test(combo);
     const isArrowKey = /(left|right|up|down)/.test(combo);
-    return isPlainKey && isArrowKey;
+    if (isPlainKey && isArrowKey) {
+      return true;
+    }
   }
 
   const withinTextInput =
@@ -53,7 +55,9 @@ mousetrap.prototype.stopCallback = (e, element, combo) => {
   if (withinTextInput) {
     const isPlainKey = !/(mod|command|ctrl)/.test(combo);
     const isReservedTextEditingShortcut = /(mod|command|ctrl)\+(a|x|c|v|left|right)/.test(combo);
-    return isPlainKey || isReservedTextEditingShortcut;
+    if (isPlainKey || isReservedTextEditingShortcut) {
+      return true;
+    }
   }
   return false;
 };
