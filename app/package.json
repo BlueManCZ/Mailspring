@@ -55,7 +55,6 @@
     "react-test-renderer": "16.9.0",
     "react-transition-group": "1.2.1",
     "reflux": "0.1.13",
-    "rimraf": "2.5.2",
     "rtlcss": "^4.3.0",
     "rx-lite": "4.0.8",
     "slate": "github:bengotow/slate#cd6f40e8",
