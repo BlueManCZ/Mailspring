@@ -291,7 +291,9 @@ export class ListTabular extends Component<ListTabularProps, ListTabularState> {
     this._unlisten = dataSource.listen(() => this.setState(this.buildStateForRange()));
 
     const range = this.getRange();
-    this.props.dataSource.setRetainedRange(range);
+    if (range) {
+      this.props.dataSource.setRetainedRange(range);
+    }
     this.setState(this.buildStateForRange({ ...range, dataSource }));
   }
 
