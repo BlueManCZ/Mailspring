@@ -7,6 +7,7 @@ import {
   TaskQueue,
   SendDraftTask,
   GetManyRFC2822Task,
+  Task,
 } from 'mailspring-exports';
 
 import { SyncActivity } from './sync-activity';
@@ -37,7 +38,7 @@ export default class ActivitySidebar extends React.Component<
 
   _unlisteners: Array<() => void>;
 
-  constructor(props) {
+  constructor(props: Record<string, unknown>) {
     super(props);
     this.state = Object.assign({ expanded: false }, this._getStateFromStores(false));
   }
@@ -46,7 +47,7 @@ export default class ActivitySidebar extends React.Component<
     this.setState(this._getStateFromStores(this.state.expanded));
   };
 
-  _getStateFromStores = (isExpanded) => {
+  _getStateFromStores = (isExpanded: boolean) => {
     return {
       tasks: TaskQueue.queue(),
 
@@ -86,11 +87,11 @@ export default class ActivitySidebar extends React.Component<
   render() {
     const { tasks, syncSummary, syncState, expanded } = this.state;
 
-    const sendTasks = [];
-    const exportTasks = [];
-    const nonSendTasks = [];
-    tasks.forEach((task) => {
-      if (SEND_TASK_CLASSES.some((klass) => task instanceof klass)) {
+    const sendTasks: SendDraftTask[] = [];
+    const exportTasks: GetManyRFC2822Task[] = [];
+    const nonSendTasks: Task[] = [];
+    tasks.forEach(task => {
+      if (SEND_TASK_CLASSES.some(klass => task instanceof klass)) {
         sendTasks.push(task);
       } else if (task instanceof GetManyRFC2822Task) {
         exportTasks.push(task);

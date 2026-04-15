@@ -23,6 +23,9 @@ export class GetManyRFC2822Task extends Task {
     outputDir: Attributes.String({
       modelKey: 'outputDir',
     }),
+    progress: Attributes.Obj({
+      modelKey: 'progress',
+    }),
     result: Attributes.Obj({
       modelKey: 'result',
     }),
@@ -31,6 +34,7 @@ export class GetManyRFC2822Task extends Task {
   folderId: string;
   folderPath: string;
   outputDir: string;
+  progress: ExportResult;
   result: ExportResult;
 
   constructor(data: AttributeValues<typeof GetManyRFC2822Task.attributes> = {}) {

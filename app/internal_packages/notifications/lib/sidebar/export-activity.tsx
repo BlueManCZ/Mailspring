@@ -21,7 +21,7 @@ export class ExportActivity extends React.Component<{ tasks: any[] }> {
     }
 
     const items = tasks.map((task: InstanceType<typeof GetManyRFC2822Task>) => {
-      const result = task.result || {};
+      const result = task.result || task.progress || {};
       const total = result.total || 0;
       const exported = result.exported || 0;
       const failed = result.failed || 0;
@@ -31,9 +31,18 @@ export class ExportActivity extends React.Component<{ tasks: any[] }> {
       if (total === 0) {
         statusText = localized('Preparing export...');
       } else if (failed > 0) {
-        statusText = localized('Exporting... %1$@ / %2$@ (%3$@ failed)', exported, total, failed);
+        statusText = localized(
+          'Exporting... %1$@ / %2$@ (%3$@ failed)',
+          exported.toLocaleString(),
+          total.toLocaleString(),
+          failed.toLocaleString()
+        );
       } else {
-        statusText = localized('Exporting... %1$@ / %2$@', exported, total);
+        statusText = localized(
+          'Exporting... %1$@ / %2$@',
+          exported.toLocaleString(),
+          total.toLocaleString()
+        );
       }
 
       return (
