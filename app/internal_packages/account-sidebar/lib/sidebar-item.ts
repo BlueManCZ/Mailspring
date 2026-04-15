@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import utf7 from 'utf7';
 
 import _str from 'underscore.string';
 import { OutlineViewItem } from 'mailspring-component-kit';
@@ -106,6 +107,51 @@ const onExportFolder = function (item) {
   );
 };
 
+function detectFolderSeparator(accountId: string): string {
+  // Check category paths for known prefixes — most reliable signal
+  for (const cat of CategoryStore.categories(accountId)) {
+    const catPath = cat.path;
+    for (const prefix of ['INBOX', '[Gmail]', '[Mailspring]', 'Mailspring']) {
+      if (catPath.startsWith(prefix) && catPath.length > prefix.length) {
+        const ch = catPath[prefix.length];
+        if (ch === '.' || ch === '/' || ch === '\\') return ch;
+      }
+    }
+  }
+
+  return '/';
+}
+
+export function createCategory(accountId: string, name: string, parentCategory?: { path: string }) {
+  if (!name) {
+    return;
+  }
+
+  let fullName: string;
+  if (parentCategory) {
+    const separator = detectFolderSeparator(accountId);
+    const decodedPath = utf7.imap.decode(parentCategory.path);
+    fullName = decodedPath + separator + name;
+  } else {
+    fullName = name;
+  }
+
+  Actions.queueTask(
+    SyncbackCategoryTask.forCreating({
+      name: fullName,
+      accountId,
+    })
+  );
+}
+
+const onCreateChild = function (item, childName) {
+  const category = item.perspective.category();
+  if (!category) {
+    return;
+  }
+  createCategory(category.accountId, childName, category);
+};
+
 const onEditItem = function (item, value) {
   let newDisplayName;
   if (!value) {
@@ -167,6 +213,7 @@ export default class SidebarItem {
         onDelete: opts.deletable ? onDeleteItem : undefined,
         onEdited: opts.editable ? onEditItem : undefined,
         onExport: opts.exportable ? onExportFolder : undefined,
+        onCreateChild: opts.editable ? onCreateChild : undefined,
         onCollapseToggled: toggleItemCollapsed,
 
         onDrop(item, event) {

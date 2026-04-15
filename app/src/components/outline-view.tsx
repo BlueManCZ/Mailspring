@@ -28,6 +28,7 @@ export interface IOutlineViewItem {
   onDelete?: (...args: any[]) => any;
   onEdited?: (...args: any[]) => any;
   onExport?: (...args: any[]) => any;
+  onCreateChild?: (...args: any[]) => any;
 }
 
 interface OutlineViewProps {
@@ -255,6 +256,9 @@ export class OutlineView extends Component<OutlineViewProps, OutlineViewState> {
   }
 
   _onTreeKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    // Don't intercept keyboard events when typing in an input (e.g. rename or new folder)
+    if ((event.target as HTMLElement).tagName === 'INPUT') return;
+
     const tree = event.currentTarget;
     const items = Array.from(tree.querySelectorAll<HTMLElement>('[role="treeitem"]')).filter(
       (el) => !el.closest('[aria-expanded="false"] [role="treeitem"]')
